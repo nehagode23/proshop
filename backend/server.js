@@ -4,6 +4,7 @@ dotenv.config();
 import products from './data/products.js';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const port= 5000;
 
@@ -15,6 +16,7 @@ app.get('/',(req, res)=>{
 });
 
 app.use('/api/products',productRoutes);
+app.use('/api/user',userRoutes);
 
 
 app.listen(port,()=>console.log(`Server running on port ${port}`));
