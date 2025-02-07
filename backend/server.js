@@ -6,6 +6,7 @@ import products from './data/products.js';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js'
 
 const port= 5000;
 
@@ -24,6 +25,7 @@ app.get('/',(req, res)=>{
 
 app.use('/api/products',productRoutes);
 app.use('/api/user',userRoutes);
+app.use('/api/orders',orderRoutes);
 
 
 app.listen(port,()=>console.log(`Server running on port ${port}`));
