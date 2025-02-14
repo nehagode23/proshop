@@ -70,7 +70,7 @@ const PlaceOrderScreen = () => {
                     <Message>Your cart is Empty</Message>
                 ):(
                     <ListGroup variant='flush'>
-                        {cart.cartItems.map((item,index)=>{
+                        {cart.cartItems.map((item,index)=>(
                             <ListGroup.Item key={index}>
                                 <Row>
                                     <Col md={1}>
@@ -84,7 +84,7 @@ const PlaceOrderScreen = () => {
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
-                        })}
+                        ))}
                     </ListGroup>
                 )}
             </ListGroup.Item>
@@ -121,7 +121,7 @@ const PlaceOrderScreen = () => {
                     </Row>
                 </ListGroup.Item>
 
-                <ListGroup.Item>{error && <Message variant='danger'>{error}</Message>}</ListGroup.Item>
+                <ListGroup.Item>{error && <Message variant='danger'>{error.data?.message || error.error}</Message>}</ListGroup.Item>
 
                 <ListGroup.Item>
                     <Button type='button' className='btn-block' disabled={cart.cartItems.length===0} onClick={placeOrderHandler}>Place Order</Button>

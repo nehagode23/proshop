@@ -6,6 +6,7 @@ const addOrderItems =asyncHandler( async(req,res)=>{
     const {
         orderItems,
         shippingAddress,
+        paymentMethod,
         itemsPrice,
         taxPrice,
         shippingPrice,
@@ -52,7 +53,25 @@ const getOrderById =asyncHandler( async(req,res)=>{
 });
 
 const updateOrderToPaid =asyncHandler( async(req,res)=>{
-    res.send('u[pdate] order items to paid');
+    const order=await Order.findById(req.params.id);
+
+    if(order){
+      order.isPaid=true;
+      order.paidAt=Date.now();
+      order.paymentResult={
+        id: req.body.id || "test-id",
+        status: req.body.status || "COMPLETED",
+        update_time: req.body.update_time || new Date().toISOString(),
+        email_address: req.body.payer?.email_address || "unknown@example.com"
+      };
+
+      const updatedOrder=await order.save();
+      res.status(200).json(updatedOrder);
+    }
+    else{
+        res.status(404);
+        throw new Error('Order not found');
+    }
 });
 
 //admins
