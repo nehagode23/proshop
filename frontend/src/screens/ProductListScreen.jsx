@@ -2,19 +2,33 @@ import React from 'react';
 import { FaTimes, FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetProductsQuery } from '../slices/productsApiSlice';
+import { useGetProductsQuery,useCreateProductMutation } from '../slices/productsApiSlice';
 import { Table, Button, Row,Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+
 
 const ProductListScreen = () => {
     const navigate=useNavigate();
-    const {data:products, isLoading, error}=useGetProductsQuery();
+    const {data:products, isLoading, error,refetch}=useGetProductsQuery();
+    const [createProduct,{isLoading:loadingCreate}]=useCreateProductMutation();
 
     const deleteHandler=(id)=>{
         if(window.confirm('Are you sure')){
             //delete products
         }
+    }
+
+    const createProductHandler=async()=>{
+        if(window.confirm('Are you sure you want to create a product?')){
+           try {
+               await createProduct();
+               refetch();
+           } catch (error) {
+                toast.error(error?.data?.message||'Failed to create product');
+        }
+    }
     }
 
   return (
@@ -25,10 +39,11 @@ const ProductListScreen = () => {
             
         </Col>
         <Col>
-        <Button className='btn-sm m-3' onClick={()=>navigate('/admin/productlist')}><FaEdit/>Create Product</Button>
+        <Button className='btn-sm m-3' onClick={createProductHandler}><FaEdit/>Create Product</Button>
         </Col>
     </Row>
-    {isLoading?<Loader/>:error?<Message variant='danger'>{error}</Message>:(
+    {loadingCreate&&<Loader/>}
+    {isLoading?<Loader/>:error?<Message variant='danger'>{error?.data?.message||error.error}</Message>:(
         <>
         <Table striped bordered hover responsive className='table-sm'>
             <thead>
@@ -67,4 +82,4 @@ const ProductListScreen = () => {
   )
 }
 
-export default ProductListScreen;
+export default ProductListScreen
