@@ -29,6 +29,10 @@ const Header = () => {
         }
     }
 
+    const gotoProfile=()=>{
+        navigate('/profile');
+    }
+
   return (
     <header>
         <Navbar bg="dark" variant='dark' expand='md' collapseOnSelect> 
@@ -52,9 +56,9 @@ const Header = () => {
                     <Nav className='ms-auto'>
                         {userInfo?(
                             <NavDropdown title={userInfo.name} id='username'>
-                                <Link to='/profile'>
-                                <NavDropdown.Item>Profile</NavDropdown.Item>
-                                </Link>
+                               
+                                <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
+                                
                                 <NavDropdown.Item onClick={logoutHandler}> Logout</NavDropdown.Item>
                             </NavDropdown>
                         ):(
