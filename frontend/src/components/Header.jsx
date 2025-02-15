@@ -1,9 +1,7 @@
 import {Navbar,Nav,Container, Badge, NavDropdown} from 'react-bootstrap';
 import {FaShoppingCart,FaUser} from 'react-icons/fa'
-import {LinkContainer} from 'react-router-bootstrap'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLogoutMutation } from '../slices/userApiSlice';
@@ -58,7 +56,7 @@ const Header = () => {
                 <Navbar.Collapse id='basic-navbar-nav'>
                     <Nav className='ms-auto'>
                         <Link to='/cart'>
-                        <Nav.Link href='/cart'><FaShoppingCart/>Cart {cartItems.length>0 &&(
+                        <Nav.Link as={Link} to='/cart'><FaShoppingCart/>Cart {cartItems.length>0 &&(
                             <Badge pill bg='success' style={{marginLeft:'5px'}}>
                                 {cartItems.reduce((a,c)=>a+c.qty,0)}
                             </Badge>
@@ -75,13 +73,13 @@ const Header = () => {
                             </NavDropdown>
                         ):(
                             <Link to='/login'>
-                        <Nav.Link href='/sign-in'><FaUser/>Sign in</Nav.Link>
+                        <Nav.Link as={Link} to='/sign-in'><FaUser/>Sign in</Nav.Link>
                     </Link>)}
                     {userInfo && userInfo.isAdmin && (
                         <NavDropdown title='Admin' id='adminmenu'>
-                                <NavDropdown.Item onClick={adminUser()}>Users</NavDropdown.Item>
-                                <NavDropdown.Item onClick={adminProduct()}>Products</NavDropdown.Item>
-                                <NavDropdown.Item onClick={adminOrder()}>Orders</NavDropdown.Item>
+                                <NavDropdown.Item onClick={adminUser}>Users</NavDropdown.Item>
+                                <NavDropdown.Item onClick={adminProduct}>Products</NavDropdown.Item>
+                                <NavDropdown.Item onClick={adminOrder}>Orders</NavDropdown.Item>
                         </NavDropdown>
                     )}
                     </Nav>
