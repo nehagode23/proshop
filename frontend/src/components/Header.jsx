@@ -33,6 +33,18 @@ const Header = () => {
         navigate('/profile');
     }
 
+    const adminUser=()=>{   
+        navigate('/admin/userlist');
+    }
+
+    const adminProduct=()=>{    
+        navigate('/admin/productlist');
+    }
+
+    const adminOrder=()=>{
+        navigate('/admin/orderlist');
+    }
+
   return (
     <header>
         <Navbar bg="dark" variant='dark' expand='md' collapseOnSelect> 
@@ -65,7 +77,13 @@ const Header = () => {
                             <Link to='/login'>
                         <Nav.Link href='/sign-in'><FaUser/>Sign in</Nav.Link>
                     </Link>)}
-                    
+                    {userInfo && userInfo.isAdmin && (
+                        <NavDropdown title='Admin' id='adminmenu'>
+                                <NavDropdown.Item onClick={adminUser()}>Users</NavDropdown.Item>
+                                <NavDropdown.Item onClick={adminProduct()}>Products</NavDropdown.Item>
+                                <NavDropdown.Item onClick={adminOrder()}>Orders</NavDropdown.Item>
+                        </NavDropdown>
+                    )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
