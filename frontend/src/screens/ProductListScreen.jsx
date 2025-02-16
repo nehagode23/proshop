@@ -2,7 +2,7 @@ import React from 'react';
 import { FaTimes, FaTrash } from 'react-icons/fa';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useGetProductsQuery,useCreateProductMutation } from '../slices/productsApiSlice';
+import { useGetProductsQuery,useCreateProductMutation, useDeleteProductMutation } from '../slices/productsApiSlice';
 import { Table, Button, Row,Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
@@ -13,10 +13,17 @@ const ProductListScreen = () => {
     const navigate=useNavigate();
     const {data:products, isLoading, error,refetch}=useGetProductsQuery();
     const [createProduct,{isLoading:loadingCreate}]=useCreateProductMutation();
+    const [deleteProduct, {isLoading:loadingDelete}]=useDeleteProductMutation();
 
-    const deleteHandler=(id)=>{
-        if(window.confirm('Are you sure')){
-            //delete products
+    const deleteHandler=async(id)=>{
+        if(window.confirm('Are you sure you want to delete product?')){
+            try {
+                await deleteProduct(id);
+                toast.success('Product Deleted');
+                refetch();
+            } catch (error) {
+                toast.error(error?.data?.message||'Failed to delete product');
+            }
         }
     }
 
@@ -43,6 +50,7 @@ const ProductListScreen = () => {
         </Col>
     </Row>
     {loadingCreate&&<Loader/>}
+    {loadingDelete&&<Loader/>}
     {isLoading?<Loader/>:error?<Message variant='danger'>{error?.data?.message||error.error}</Message>:(
         <>
         <Table striped bordered hover responsive className='table-sm'>
