@@ -128,7 +128,7 @@ const deleteUser=asyncHandler( async(req,res)=>{
             throw new Error('Admin cannot be deleted');
         }
         //written in diff way
-        await user.remove();
+        await User.deleteOne({_id:req.params.id});
         res.status(200).json({message:'User deleted successfully'});
     }
     else{

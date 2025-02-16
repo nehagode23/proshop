@@ -50,7 +50,7 @@ const UserListScreen = () => {
                     <tr key={user._id}>
                         <td>{user._id}</td>
                         <td>{user.name}</td>
-                        <td><a href={`mailto:${user.email}`}></a></td>
+                        <td>{user.email}</td>
                         <td>{user.isAdmin? (<FaCheck style={{color:'green'}}/>):(<FaTimes style={{color:'red'}}/>)}</td>
                         <td>
                             

@@ -42,7 +42,7 @@ export const userApiSlice =apiSlice.injectEndpoints({
                 url:`${USERS_URL}/${userId}`,
                 method:'DELETE',
             }),
-            
+            invalidatesTags:['Users'],
         }),
         getUserDetails:builder.query({
             query:(userId)=>({
@@ -56,7 +56,7 @@ export const userApiSlice =apiSlice.injectEndpoints({
                 method:'PUT',
                 body:data,
             }),
-            invalidatesTags:['User'],
+            invalidatesTags:['Users'],
         })
     }),
 });
