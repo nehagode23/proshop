@@ -11,6 +11,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 
 const port= 5000;
+console.log(process.env.NODE_ENV); // Debugging line
+
 
 connectDB(); //connect to mongodb
 const app=express();
@@ -40,4 +42,4 @@ if(process.env.NODE_ENV==='production'){
         res.send('API is running...');
     });
 }
-app.listen(port,()=>console.log(`Server running on port ${port}`));
+app.listen(process.env.PORT,()=>console.log(`Server running on port ${port}`));
